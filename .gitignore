@@ -39,6 +39,7 @@ env/
 venv
 venv.bak/
 venv/
+.env.docker
 
 # IDEs
 .DS_Store
