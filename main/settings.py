@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'change-me')
 
 DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', ['*', '127.0.0.1'])
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(' ')
 
 APP_DIR = BASE_DIR / "core_apps"
 # Application definition
