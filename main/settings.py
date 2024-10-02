@@ -1,15 +1,16 @@
 import os
 from pathlib import Path
 import dj_database_url
-
+import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env(env_file=os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'change-me')
 
 DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', ['*', '127.0.0.1'])
 
 
 # Application definition
