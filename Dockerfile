@@ -1,19 +1,14 @@
-FROM python:3.12-bullseye
+FROM python:3.11-alpine3.18
+LABEL maintainer='tiomashimon'
 
-ENV PYTHONBUFFERED=1
-#
-#RUN mkdir code
-WORKDIR /django
-#
-#ADD . /code/
-#ADD .env.docker /code/.env
-#
-#ENV APP_NAME=MAIN
+ENV PYTHONUNBUFFERED=1
 
-COPY requirements.txt requirements.txt
+COPY ./requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
+    rm -rf /tmp
 
-RUN pip install -r requirements.txt
 COPY . .
 
-CMD python manage.py runserver 0.0.0.0:8000
+EXPOSE 8000
 
+CMD ["scripts/run.sh"]

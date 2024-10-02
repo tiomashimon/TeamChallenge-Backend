@@ -12,7 +12,7 @@ DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', ['*', '127.0.0.1'])
 
-
+APP_DIR = BASE_DIR / "core_apps"
 # Application definition
 
 THIRD_PARTY_APPS = [
@@ -30,6 +30,7 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
+    "core_apps.users",
 
 ]
 

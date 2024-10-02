@@ -6,6 +6,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from .views import hello_world # temporary
 
+
 schema_view = get_schema_view(
     openapi.Info(
         title="TeamChallenge",
