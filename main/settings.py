@@ -31,6 +31,9 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     "core_apps.users",
+    'core_apps.products',
+    'core_apps.cart',
+    'core_apps.orders',
 
 ]
 
