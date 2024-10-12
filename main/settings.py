@@ -4,11 +4,12 @@ import dj_database_url
 import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env(env_file=os.path.join(BASE_DIR, '.env'))
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'change-me')
-
-DEBUG = os.environ.get('DEBUG', False)
+SECRET_KEY = env('SECRET_KEY', default='change-me') 
+DEBUG = env('DEBUG', default=False) == 'True'  
+ALLOWED_HOSTS = env('ALLOWED_HOSTS', default='*').split(' ')
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(' ')
 
@@ -77,14 +78,24 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD': env("DB_PASSWORD"),
+        'HOST': env("DB_HOST"),
+        'PORT': env("DB_PORT"),
+    }
+}
 
 database_url = os.environ.get("DATABASE_URL")
-DATABASES["default"] = dj_database_url.parse('postgresql://teamchallenge_icqk_user:4asX4GfEk9qnVTl4B4XUKVXb0TMAKD0z@dpg-crqju8lsvqrc73d0giag-a.oregon-postgres.render.com/teamchallenge_icqk')
+if database_url:
+    DATABASES["default"] = dj_database_url.parse(database_url)
+
 
 
 # Password validation
