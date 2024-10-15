@@ -1,7 +1,8 @@
 '''Models for Products app'''
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Category(models.Model):
@@ -31,3 +32,26 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Reviews(models.Model):
+    '''Model for rating products'''
+    user = models.ForeignKey(
+        get_user_model(), 
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_('User'),
+        related_name='reviews')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'), related_name='reviews')
+    rating = models.IntegerField(
+        _('Rating'),
+        validators=[
+            MaxValueValidator(10),
+            MinValueValidator(1)
+        ])
+    comment = models.TextField(_('Comment'),  blank=True, null=True)
+    created_at = models.TimeField(_('Create at'), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("Review")
+        verbose_name_plural = _("Reviews")
